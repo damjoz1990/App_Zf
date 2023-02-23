@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog https://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.2.xsd">
+    <changeSet id="0001" author="DamianJozwiak">
+        <createTable tableName="writer">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints nullable="false" primaryKey="true"/>
+            </column>
+            <column name="first_name" type="VARCHAR(100)" />
+            <column name="last_name" type="VARCHAR(100)" />
+            <column name="genre" type="VARCHAR(100)" />
+        </createTable>
+   </changeSet>
+    <changeSet id="0002" author="DamianJozwiak">
+        <createTable tableName="book">
+            <column name="id" type="BIGINT" autoIncrement="true">
+            <constraints nullable="false" primaryKey="true"/>
+            </column>
+
+            <column name="title" type="VARCHAR(100)"/>
+            <column name="publisher" type="VARCHAR(1000)"/>
+            <column name="description" type="VARCHAR(1000)"/>
+            <column name="pages" type="INT"/>
+            <column name="writer_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+        <addForeignKeyConstraint baseTableName="book" baseColumnNames="writer_id" constraintName="fk_book_writer_id"
+                                 referencedTableName="writer"
+                                 referencedColumnNames="id"/>
+    </changeSet>
+    <include file="../testdata/testdata.sql" relativeToChangelogFile="true"/>
+</databaseChangeLog>
